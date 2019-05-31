@@ -8,3 +8,32 @@ version of the master branch and restart itself
 using that code.
 */
 
+const axios = require('axios');
+const gitApiUrl = 'https://api.github.com/repos/kraljevo/changebot/pulls'
+
+refresh = () => {
+    console.log('Pulling data.')
+    axios
+        .get(gitApiUrl)
+        .then(resp => {
+            console.log(resp.data.links.statuses)
+            console.log('Response should be logged.')
+        })
+        .catch(err => {
+            console.log(err)
+        })
+
+    setTimeout(refresh, 900000);
+}
+setTimeout(refresh, 900000);
+
+refresh();
+/*
+if(pullrequests){
+    if(x time has passed){
+        if(pullrequest has thumbs up){
+            approve pullrequest
+        }
+    }
+}
+*/
