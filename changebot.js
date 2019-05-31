@@ -9,7 +9,7 @@ using that code.
 */
 
 const axios = require('axios');
-const gitApiUrl = 'https://api.github.com/repos/kraljevo/changebot/pulls'
+const gitApiUrl = 'https://api.github.com/repos/kraljevo/changebot/pulls&state=open'
 
 refresh = () => {
     console.log('Pulling data.')
@@ -17,12 +17,11 @@ refresh = () => {
         .get(gitApiUrl)
         .then(resp => {
             console.log(resp.data.links.statuses)
-            console.log('Response should be logged.')
         })
         .catch(err => {
             console.log(err)
         })
-
+    console.log('Response should be logged.')
     setTimeout(refresh, 900000);
 }
 setTimeout(refresh, 900000);
