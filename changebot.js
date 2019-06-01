@@ -9,30 +9,80 @@ using that code.
 */
 
 const axios = require('axios');
-const gitApiUrl = 'https://api.github.com/repos/kraljevo/changebot/pulls&state=open'
+const pullRequestUrl = 'https://api.github.com/repos/kraljevo/changebot/pulls'
+const timeLimit = 1000;
 
 refresh = () => {
-    console.log('Pulling data.')
+    console.log('Checking for Pull Requests.')
     axios
-        .get(gitApiUrl)
+        .get(pullRequestUrl)
         .then(resp => {
-            console.log(resp.data.links.statuses)
+            pullRequestData = resp.data;
+            pullRequestData.forEach(pull => {
+                let usernames = [];
+                let votesYes = 0;
+                let votesNo = 0;
+                let majorityVotes = 3;
+                let pullCommentsUrl = `https://api.github.com/repos/kraljevo/changebot/issues/${pull.number}/comments`;
+                let timeNow = new Date();
+                let timeRequested = new Date(pull.created_at);
+                if(timeNow.getTime() - timeRequested.getTime() > timeLimit){
+                    console.log('Checking for votes.')
+                    axios
+                        .get(pullCommentsUrl)
+                        .then(resp => {
+                            let allComments = resp.data
+                            allComments.forEach(commData => {
+                                let commBody = commData.body
+                                let commUser = commData.user.login
+                                if(commBody.startsWith('👍')){
+                                    if(!usernames.some(user => {
+                                        user === commUser
+                                    })){
+                                        usernames.push(commUser);
+                                        votesYes += 1;
+                                        console.log(`Votes tallied. There are currently ${votesYes} votes to approve this pull request.`)
+                                    }
+                                } else if(commBody.startsWith('👎')){
+                                    if(!usernames.some(user => {
+                                        user === commUser
+                                    })){
+                                        usernames.push(commUser);
+                                        votesNo += 1;
+                                        console.log(`Votes tallied. There are currently ${votesNo} votes to decline this pull request.`)
+                                    }
+                                }
+                                if(votesYes >= majorityVotes){
+                                    console.log('The request has been accepted.')
+                                    axios({
+                                        method: 'put',
+                                        url: `${pullRequestUrl}/${pull.number}/merge`,
+                                        auth: {
+                                            username: 'kraljevo'
+                                        }
+                                        })
+                                        .then(resp => {
+                                            console.log(resp)
+                                        })
+                                        .catch(err => {
+                                            console.log(err)
+                                        })
+                                } else if(votesNo >= majorityVotes){
+                                    console.log('The request has been declined.')
+                                }
+                            })
+                        })
+                        .catch(err => {
+                            console.log(err)
+                        })
+                }
+            })
         })
         .catch(err => {
             console.log(err)
         })
-    console.log('Response should be logged.')
     setTimeout(refresh, 900000);
 }
 setTimeout(refresh, 900000);
 
 refresh();
-/*
-if(pullrequests){
-    if(x time has passed){
-        if(pullrequest has thumbs up){
-            approve pullrequest
-        }
-    }
-}
-*/
