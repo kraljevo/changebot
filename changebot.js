@@ -35,21 +35,17 @@ refresh = () => {
                             allComments.forEach(commData => {
                                 let commBody = commData.body
                                 let commUser = commData.user.login
-                                if(commBody.startsWith('👍')){
-                                    if(!usernames.some(user => {
-                                        user === commUser
-                                    })){
+                                if(commBody.startsWith('vote yes')){
+                                    if(!usernames.includes(commUser)){
                                         usernames.push(commUser);
                                         votesYes += 1;
-                                        console.log(`Votes tallied. There are currently ${votesYes} votes to approve this pull request.`)
+                                        console.log(`There are currently ${votesYes} votes to approve this pull request.`)
                                     }
-                                } else if(commBody.startsWith('👎')){
-                                    if(!usernames.some(user => {
-                                        user === commUser
-                                    })){
+                                } else if(commBody.startsWith('vote no')){
+                                    if(!usernames.includes(commUser)){
                                         usernames.push(commUser);
                                         votesNo += 1;
-                                        console.log(`Votes tallied. There are currently ${votesNo} votes to decline this pull request.`)
+                                        console.log(`There are currently ${votesNo} votes to decline this pull request.`)
                                     }
                                 }
                                 if(votesYes >= majorityVotes){
