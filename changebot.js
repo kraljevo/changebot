@@ -47,8 +47,8 @@ refresh = () => {
                                         method: 'put',
                                         url: `${pullRequestUrl}/${pull.number}/merge`,
                                         auth: {
-                                            username: 'kraljevo',
-                                            password: password
+                                            username: process.env.MYUSERNAME,
+                                            password: process.env.MYPASSWORD
                                         }
                                         })
                                         .then(resp => {
