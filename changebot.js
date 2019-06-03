@@ -98,5 +98,3 @@ const loginPassword = () => {
 };
 
 loginPassword()
-
-//test
