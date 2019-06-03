@@ -1,3 +1,4 @@
+require('dotenv').config();
 const axios = require('axios');
 const pullRequestUrl = 'https://api.github.com/repos/kraljevo/changebot/pulls'
 const timeLimit = 1000;
