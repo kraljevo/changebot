@@ -17,7 +17,10 @@ refresh = () => {
     axios
         .get(pullRequestUrl)
         .then(resp => {
-            pullRequestData = resp.data;
+            let pullRequestData = resp.data;
+            if(pullRequestData[0] === undefined){
+                console.log('Nothing to report.')
+            }
             pullRequestData.forEach(pull => {
                 let usernames = [];
                 let votesYes = 0;
@@ -37,13 +40,13 @@ refresh = () => {
                                 let commUser = commData.user.login
                                 if(commBody.startsWith('vote yes')){
                                     if(!usernames.includes(commUser)){
-                                        usernames.push(commUser);
+                                        //usernames.push(commUser);
                                         votesYes += 1;
                                         console.log(`There are currently ${votesYes} votes to approve this pull request.`)
                                     }
                                 } else if(commBody.startsWith('vote no')){
                                     if(!usernames.includes(commUser)){
-                                        usernames.push(commUser);
+                                        //usernames.push(commUser);
                                         votesNo += 1;
                                         console.log(`There are currently ${votesNo} votes to decline this pull request.`)
                                     }
@@ -65,6 +68,8 @@ refresh = () => {
                                         })
                                 } else if(votesNo >= majorityVotes){
                                     console.log('The request has been declined.')
+                                } else if(votesNo === 0 && votesYes === 0){
+                                    console.log('No votes have been cast.')
                                 }
                             })
                         })
