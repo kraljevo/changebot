@@ -1,13 +1,3 @@
-/*In this repo, write a bot using the GitHub api
-that automatically accepts any pull requests to
-this repo after X amount of time if the pull request
-receives more thumbs up emoji reacts than thumbs
-down. Then whenever a new pull request is accepted
-to the master branch, the bot should pull the latest
-version of the master branch and restart itself
-using that code.
-*/
-
 const axios = require('axios');
 const pullRequestUrl = 'https://api.github.com/repos/kraljevo/changebot/pulls'
 const timeLimit = 1000;
@@ -16,7 +6,6 @@ let password;
 process.stdin.setEncoding('utf8');
 
 const loginPassword = () => {
-    //ask for username in this function
     process.stdout.write("Password: ")
     process.stdin.on('data', (data => {
         password = data.toString().trim();
