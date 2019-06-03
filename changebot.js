@@ -1,7 +1,6 @@
 const axios = require('axios');
 const pullRequestUrl = 'https://api.github.com/repos/kraljevo/changebot/pulls'
 const timeLimit = 1000;
-let password;
 
 process.stdin.setEncoding('utf8');
 
@@ -59,8 +58,8 @@ refresh = () => {
                                         method: 'put',
                                         url: `${pullRequestUrl}/${pull.number}/merge`,
                                         auth: {
-                                            username: 'kraljevo',
-                                            password: password
+                                            username: process.env.MYUSERNAME,
+                                            password: process.env.MYPASSWORD
                                         }
                                         })
                                         .then(resp => {
