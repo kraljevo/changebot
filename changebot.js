@@ -91,9 +91,9 @@ const loginPassword = () => {
                 .catch(err => {
                     console.log(err)
                 })
-            setTimeout(refresh, 900000);
+            setTimeout(refresh, 1800000);
         }
-        setTimeout(refresh, 900000);
+        setTimeout(refresh, 2000);
     }))
 };
 
