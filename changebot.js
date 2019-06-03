@@ -9,6 +9,7 @@ const loginPassword = () => {
     process.stdout.write("Password: ")
     process.stdin.on('data', (data => {
         password = data.toString().trim();
+        process.send('ready');
         refresh = () => {
             console.log('Checking for Pull Requests.')
             axios
