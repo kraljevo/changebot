@@ -2,17 +2,6 @@ const axios = require('axios');
 const pullRequestUrl = 'https://api.github.com/repos/kraljevo/changebot/pulls'
 const timeLimit = 1000;
 
-process.stdin.setEncoding('utf8');
-
-const loginPassword = () => {
-    process.stdout.write("Password: ")
-    process.stdin.on('data', (data => {
-        password = data.toString().trim();
-        refresh();
-        setTimeout(refresh, 2000);
-    }))
-};
-
 refresh = () => {
     console.log('Checking for Pull Requests.')
     axios
@@ -86,5 +75,6 @@ refresh = () => {
         })
     setTimeout(refresh, 1800000);
 }
+setTimeout(refresh, 3000);
 
-loginPassword()
+//test
