@@ -31,13 +31,13 @@ refresh = () => {
                                 let commUser = commData.user.login
                                 if(commBody.startsWith('vote yes')){
                                     if(!usernames.includes(commUser)){
-                                        //usernames.push(commUser);
+                                        usernames.push(commUser);
                                         votesYes += 1;
                                         console.log(`There are currently ${votesYes} votes to approve this pull request.`)
                                     }
                                 } else if(commBody.startsWith('vote no')){
                                     if(!usernames.includes(commUser)){
-                                        //usernames.push(commUser);
+                                        usernames.push(commUser);
                                         votesNo += 1;
                                         console.log(`There are currently ${votesNo} votes to decline this pull request.`)
                                     }
@@ -77,4 +77,3 @@ refresh = () => {
     setTimeout(refresh, 1800000);
 }
 setTimeout(refresh, 3000);
-
