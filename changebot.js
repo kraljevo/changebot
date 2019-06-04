@@ -1,3 +1,5 @@
+//test
+
 require('dotenv').config();
 const axios = require('axios');
 const pullRequestUrl = 'https://api.github.com/repos/kraljevo/changebot/pulls'
@@ -77,4 +79,3 @@ refresh = () => {
     setTimeout(refresh, 1800000);
 }
 setTimeout(refresh, 3000);
-
