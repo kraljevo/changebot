@@ -1,4 +1,7 @@
-//test
+/*
+This is a simple bot that will automatically execute GitHub pull requests
+based on a voting system in the pull request's comment section.
+*/
 
 require('dotenv').config();
 const axios = require('axios');
