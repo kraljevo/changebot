@@ -1,1 +1,2 @@
 # changebot
+This is a short, simple bot that allows a user to set up a voting system on GitHub pull requests for automatic approval. There is no front-end. Simply update the bot's variables to match your preferences, and add a .env file containing the variables "MYUSERNAME" (GitHub username of the repository's owner) and "MYPASSWORD" (GitHub password of the repository's owner).
